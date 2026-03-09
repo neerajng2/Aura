@@ -198,11 +198,11 @@ function EventCard({ event, selected, onToggle, cc }) {
 /* ─── QR / Payment section ─── */
 function QRPlaceholder() {
   const cells = [];
-  const pattern = [[1,1,1,1,1,1,1],[1,0,0,0,0,0,1],[1,0,1,1,1,0,1],[1,0,1,0,1,0,1],[1,0,1,1,1,0,1],[1,0,0,0,0,0,1],[1,1,1,1,1,1,1]];
+  const pattern = [[1, 1, 1, 1, 1, 1, 1], [1, 0, 0, 0, 0, 0, 1], [1, 0, 1, 1, 1, 0, 1], [1, 0, 1, 0, 1, 0, 1], [1, 0, 1, 1, 1, 0, 1], [1, 0, 0, 0, 0, 0, 1], [1, 1, 1, 1, 1, 1, 1]];
   for (let r = 0; r < 7; r++) for (let c = 0; c < 7; c++) {
-    if (pattern[r][c]) { cells.push(<rect key={`tl${r}${c}`} x={c*5} y={r*5} width={5} height={5} fill="#111" />); cells.push(<rect key={`tr${r}${c}`} x={65+c*5} y={r*5} width={5} height={5} fill="#111" />); cells.push(<rect key={`bl${r}${c}`} x={c*5} y={65+r*5} width={5} height={5} fill="#111" />); }
+    if (pattern[r][c]) { cells.push(<rect key={`tl${r}${c}`} x={c * 5} y={r * 5} width={5} height={5} fill="#111" />); cells.push(<rect key={`tr${r}${c}`} x={65 + c * 5} y={r * 5} width={5} height={5} fill="#111" />); cells.push(<rect key={`bl${r}${c}`} x={c * 5} y={65 + r * 5} width={5} height={5} fill="#111" />); }
   }
-  const rand = [15,20,25,30,35,40,45,50,55];
+  const rand = [15, 20, 25, 30, 35, 40, 45, 50, 55];
   rand.forEach(x => rand.forEach(y => { if (Math.sin(x * y) > 0) cells.push(<rect key={`r${x}${y}`} x={x} y={y} width={4} height={4} fill="#111" />); }));
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(0,200,255,0.15)", borderRadius: "16px", padding: "24px", marginBottom: "20px" }}>
@@ -275,6 +275,51 @@ function SuccessScreen({ data }) {
   );
 }
 
+/* ─── Admin Login Modal ─── */
+function AdminLogin({ onSuccess, onClose }) {
+  const [pw, setPw] = useState("");
+  const [err, setErr] = useState("");
+  const [show, setShow] = useState(false);
+  const ADMIN_PASSWORD = "AURA@2026";
+
+  const attempt = () => {
+    if (pw === ADMIN_PASSWORD) { onSuccess(); }
+    else { setErr("Incorrect password. Try again."); setPw(""); }
+  };
+
+  return (
+    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)", zIndex: 10000, display: "flex", alignItems: "center", justifyContent: "center", padding: "20px", backdropFilter: "blur(6px)" }}>
+      <div style={{ background: "#0d1117", border: "1px solid rgba(0,200,255,0.2)", borderRadius: "20px", padding: "36px 32px", width: "100%", maxWidth: "380px", boxShadow: "0 24px 80px rgba(0,0,0,0.8), 0 0 40px rgba(0,200,255,0.08)" }}>
+        <div style={{ textAlign: "center", marginBottom: "28px" }}>
+          <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "rgba(0,200,255,0.1)", border: "1px solid rgba(0,200,255,0.25)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.4rem", margin: "0 auto 16px" }}>🔐</div>
+          <h2 style={{ fontFamily: "'Orbitron',monospace", fontSize: "1rem", color: "#00c8ff", fontWeight: 700, letterSpacing: "1px", marginBottom: "6px" }}>Admin Access</h2>
+          <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.78rem", fontFamily: "'Inter',sans-serif" }}>Enter the admin password to continue</p>
+        </div>
+
+        <div style={{ position: "relative", marginBottom: "16px" }}>
+          <input
+            type={show ? "text" : "password"}
+            value={pw}
+            onChange={e => { setPw(e.target.value); setErr(""); }}
+            onKeyDown={e => e.key === "Enter" && attempt()}
+            placeholder="Admin password"
+            autoFocus
+            style={{ width: "100%", background: "rgba(255,255,255,0.04)", border: `1px solid ${err ? "#ef5350" : "rgba(255,255,255,0.1)"}`, borderRadius: "10px", padding: "12px 44px 12px 14px", color: "#fff", fontSize: "0.92rem", outline: "none", boxSizing: "border-box", fontFamily: "'Inter',sans-serif" }}
+          />
+          <button onClick={() => setShow(s => !s)} style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "rgba(255,255,255,0.35)", cursor: "pointer", fontSize: "1rem", padding: 0 }}>{show ? "🙈" : "👁"}</button>
+        </div>
+
+        {err && <p style={{ color: "#ef5350", fontSize: "0.75rem", fontFamily: "'Inter',sans-serif", marginBottom: "14px", textAlign: "center" }}>⚠️ {err}</p>}
+
+        <div style={{ display: "flex", gap: "10px" }}>
+          <button onClick={onClose} style={{ flex: 1, padding: "11px", borderRadius: "10px", background: "transparent", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: "0.85rem", fontFamily: "'Inter',sans-serif" }}>Cancel</button>
+          <button onClick={attempt} style={{ flex: 2, padding: "11px", borderRadius: "10px", background: "linear-gradient(135deg,#00c8ff,#7c3aed)", border: "none", color: "#fff", cursor: "pointer", fontSize: "0.88rem", fontWeight: 700, fontFamily: "'Inter',sans-serif" }}>Unlock →</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Admin Panel ─── */
 function AdminPanel({ regs, onClose }) {
   return (
@@ -327,14 +372,25 @@ function AdminPanel({ regs, onClose }) {
 }
 
 /* ─── Main App ─── */
+const LS_KEY = "aura2k26_registrations";
+
 export default function App() {
   const formRef = useRef();
   const [step, setStep] = useState(1);
   const [success, setSuccess] = useState(false);
   const [admin, setAdmin] = useState(false);
-  const [regs, setRegs] = useState([]);
-  const [adminKey, setAdminKey] = useState("");
+  const [showLogin, setShowLogin] = useState(false);
   const [errors, setErrors] = useState({});
+
+  // Persist registrations in localStorage so they survive page refresh
+  const [regs, setRegs] = useState(() => {
+    try { return JSON.parse(localStorage.getItem(LS_KEY) || "[]"); } catch { return []; }
+  });
+  const addReg = (entry) => setRegs(prev => {
+    const next = [...prev, entry];
+    try { localStorage.setItem(LS_KEY, JSON.stringify(next)); } catch {}
+    return next;
+  });
 
   const [s1, setS1] = useState({ fullName: "", email: "", whatsapp: "", college: "", department: "", rollNumber: "" });
   const [selEvts, setSelEvts] = useState({ Technical: [], Cultural: [], "Non-Technical": [] });
@@ -368,17 +424,12 @@ export default function App() {
     if (step === 2 && !v2()) return;
     if (step === 3) {
       if (!v3()) return;
-      setRegs(p => [...p, { step1: s1, selectedEvents: selEvts, step3: s3, ts: new Date().toISOString() }]);
+      addReg({ step1: s1, selectedEvents: selEvts, step3: s3, ts: new Date().toISOString() });
       setSuccess(true); return;
     }
     setStep(x => x + 1);
     setTimeout(() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
   };
-
-  useEffect(() => {
-    const h = e => { if (e.key === "Enter" && adminKey === "AURA2026") { setAdmin(true); setAdminKey(""); } };
-    window.addEventListener("keydown", h); return () => window.removeEventListener("keydown", h);
-  }, [adminKey]);
 
   const card = {
     background: "rgba(255,255,255,0.025)",
@@ -417,6 +468,7 @@ export default function App() {
       `}</style>
 
       <ParticleCanvas />
+      {showLogin && <AdminLogin onSuccess={() => { setShowLogin(false); setAdmin(true); }} onClose={() => setShowLogin(false)} />}
       {admin && <AdminPanel regs={regs} onClose={() => setAdmin(false)} />}
 
       {/* ── HERO ── */}
@@ -428,7 +480,7 @@ export default function App() {
           {/* Logo */}
           <div style={{ animation: "floatY 3.5s ease-in-out infinite", marginBottom: "24px" }}>
             <img
-              src="/aura-logo.png"
+              src="public/aura-logo.png"
               alt="AURA Logo"
               style={{ height: "clamp(60px,14vw,110px)", width: "auto", filter: "drop-shadow(0 0 24px rgba(0,200,255,0.45))", objectFit: "contain" }}
             />
@@ -578,17 +630,17 @@ export default function App() {
           </>
         )}
 
-        {/* Footer hint */}
-        <div style={{ textAlign: "center", marginTop: "36px", color: "rgba(255,255,255,0.06)", fontSize: "0.6rem", letterSpacing: "2px", fontFamily: "'Inter',sans-serif" }}>
-          AURA 2k26 © 2026
+        {/* Footer */}
+        <div style={{ textAlign: "center", marginTop: "36px", display: "flex", alignItems: "center", justifyContent: "center", gap: "12px" }}>
+          <span style={{ color: "rgba(255,255,255,0.08)", fontSize: "0.6rem", letterSpacing: "2px", fontFamily: "'Inter',sans-serif" }}>AURA 2k26 © 2026</span>
+          <span style={{ color: "rgba(255,255,255,0.06)", fontSize: "0.6rem" }}>·</span>
+          <button onClick={() => setShowLogin(true)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.1)", fontSize: "0.6rem", letterSpacing: "2px", cursor: "pointer", fontFamily: "'Inter',sans-serif", padding: 0, transition: "color 0.2s" }}
+            onMouseEnter={e => e.target.style.color = "rgba(255,255,255,0.3)"}
+            onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.1)"}>
+            ADMIN
+          </button>
         </div>
       </div>
-
-      {/* Hidden admin input */}
-      <input type="password" value={adminKey} onChange={e => setAdminKey(e.target.value)}
-        onKeyDown={e => { if (e.key === "Enter" && adminKey === "AURA2026") { setAdmin(true); setAdminKey(""); } }}
-        placeholder="🔐"
-        style={{ position: "fixed", bottom: "16px", right: "16px", width: "72px", padding: "6px 10px", borderRadius: "8px", background: "rgba(255,255,255,0.015)", border: "1px solid rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.15)", fontSize: "0.6rem", outline: "none", zIndex: 100, fontFamily: "'Inter',sans-serif" }} />
     </div>
   );
 }
