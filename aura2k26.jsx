@@ -493,7 +493,7 @@ export default function App() {
           </div>
 
           <h1 className="hero-title" style={{ fontSize: "clamp(3.2rem,13vw,8rem)", fontWeight: 900, letterSpacing: "2px", lineHeight: 1, marginBottom: "14px" }}>AURA 2k26</h1>
-          <p style={{ fontFamily: "'Inter',sans-serif", fontSize: "clamp(0.85rem,2.5vw,1.15rem)", color: "rgba(255,255,255,0.45)", letterSpacing: "5px", marginBottom: "52px", textTransform: "uppercase", fontWeight: 500 }}>Ignite the Aura Within</p>
+          <p style={{ fontFamily: "'Inter',sans-serif", fontSize: "clamp(0.85rem,2.5vw,1.15rem)", color: "rgba(255,255,255,0.45)", letterSpacing: "5px", marginBottom: "52px", textTransform: "uppercase", fontWeight: 500 }}>Electronic City’s Biggest Cultural & Sports Fest for Kids</p>
 
           {/* Countdown */}
           <div style={{ marginBottom: "52px" }}>
@@ -632,11 +632,11 @@ export default function App() {
 
         {/* Footer */}
         <div style={{ textAlign: "center", marginTop: "36px", display: "flex", alignItems: "center", justifyContent: "center", gap: "12px" }}>
-          <span style={{ color: "rgba(255,255,255,0.08)", fontSize: "0.6rem", letterSpacing: "2px", fontFamily: "'Inter',sans-serif" }}>AURA 2k26 © 2026</span>
-          <span style={{ color: "rgba(255,255,255,0.06)", fontSize: "0.6rem" }}>·</span>
-          <button onClick={() => setShowLogin(true)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.1)", fontSize: "0.6rem", letterSpacing: "2px", cursor: "pointer", fontFamily: "'Inter',sans-serif", padding: 0, transition: "color 0.2s" }}
-            onMouseEnter={e => e.target.style.color = "rgba(255,255,255,0.3)"}
-            onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.1)"}>
+          <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.7rem", letterSpacing: "2px", fontFamily: "'Inter',sans-serif" }}>AURA 2k26 © 2026</span>
+          <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.7rem" }}>·</span>
+          <button onClick={() => setShowLogin(true)} style={{ background: "none", border: "none", color: "#fff", fontSize: "0.7rem", letterSpacing: "2px", cursor: "pointer", fontFamily: "'Inter',sans-serif", padding: 0, fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px", transition: "opacity 0.2s" }}
+            onMouseEnter={e => e.target.style.opacity = "0.7"}
+            onMouseLeave={e => e.target.style.opacity = "1"}>
             ADMIN
           </button>
         </div>
