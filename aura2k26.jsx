@@ -388,7 +388,7 @@ export default function App() {
   });
   const addReg = (entry) => setRegs(prev => {
     const next = [...prev, entry];
-    try { localStorage.setItem(LS_KEY, JSON.stringify(next)); } catch {}
+    try { localStorage.setItem(LS_KEY, JSON.stringify(next)); } catch { }
     return next;
   });
 
@@ -489,10 +489,10 @@ export default function App() {
           {/* Badge */}
           <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(224,64,251,0.08)", border: "1px solid rgba(224,64,251,0.2)", borderRadius: "50px", padding: "6px 16px", marginBottom: "24px" }}>
             <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#e040fb", display: "inline-block", boxShadow: "0 0 8px #e040fb" }} />
-            <span style={{ fontSize: "0.65rem", letterSpacing: "4px", textTransform: "uppercase", color: "rgba(224,64,251,0.85)", fontFamily: "'Inter',sans-serif", fontWeight: 700 }}>Flagship College Fest 2026</span>
+            <span style={{ fontSize: "0.65rem", letterSpacing: "4px", textTransform: "uppercase", color: "rgba(224,64,251,0.85)", fontFamily: "'Inter',sans-serif", fontWeight: 700 }}>Electronic City’s Biggest Cultural & Sports Fest for Kids</span>
           </div>
 
-          <h1 className="hero-title" style={{ fontFamily: "'Orbitron',monospace", fontSize: "clamp(3.2rem,13vw,8rem)", fontWeight: 900, letterSpacing: "2px", lineHeight: 1, marginBottom: "14px" }}>AURA 2k26</h1>
+          <h1 className="hero-title" style={{ fontSize: "clamp(3.2rem,13vw,8rem)", fontWeight: 900, letterSpacing: "2px", lineHeight: 1, marginBottom: "14px" }}>AURA 2k26</h1>
           <p style={{ fontFamily: "'Inter',sans-serif", fontSize: "clamp(0.85rem,2.5vw,1.15rem)", color: "rgba(255,255,255,0.45)", letterSpacing: "5px", marginBottom: "52px", textTransform: "uppercase", fontWeight: 500 }}>Ignite the Aura Within</p>
 
           {/* Countdown */}
